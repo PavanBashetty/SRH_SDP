@@ -1,0 +1,17 @@
+UI
+1. login/register  [employee gets emp_id, default password] -> logsin
+	1.1 password reset, completes basic personal details
+2. same home login page -> HR logs in
+	2.1 completes remaining employee details [payment, official email id]
+
+
+
+
+1. HR logs in
+	1.1 existing employee details are visible
+
+
+
+
+Employees:
+emp_address, emp_bank_details, emp_benefits [one time edit], emp_exp_hist, emp_education, emp_vacation, emp_family

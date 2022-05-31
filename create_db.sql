@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS employees;
 -- TABLE 1
 	-- read only to employee
 CREATE TABLE employees (
-  emp_id INT(10) NOT NULL AUTO_INCREMENT,
+  emp_id INT(10) AUTO_INCREMENT,
   last_name VARCHAR(30) NOT NULL,
   middle_name VARCHAR(30),
   first_name VARCHAR(30) NOT NULL,
@@ -43,12 +43,15 @@ DROP TABLE IF EXISTS emp_job_title;
 -- TABLE 3
 	-- read only to employee
 CREATE TABLE emp_job_title (
-  emp_id INT(10) NOT NULL UNIQUE,
-  employment_status ENUM('Internal','External'),
-  employment_sub_status ENUM('Full time','Part time', 'Internship', 'Working student'),
-  employment_title VARCHAR(50),
-  curr_job_title VARCHAR(50),
-  working_status ENUM('Active','On leave','Seperated','On notice', 'Prohibition','Retired')
+	emp_id INT(10),
+	employment_status ENUM('Internal','External'),
+	employment_sub_status ENUM('Full time','Part time', 'Internship', 'Working student'),
+	employment_title VARCHAR(50),
+	curr_job_title VARCHAR(50),
+	working_status ENUM('Active','On leave','Seperated','On notice', 'Prohibition','Retired'),
+	PRIMARY KEY(emp_id),
+    INDEX `idx_emp_job_title` (emp_id),
+    CONSTRAINT `fk_emp_job_title_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_job_title VALUES(10000,'Internal', 'Full time', 'senior_staff', 'senior analyst', 'Active');
 SELECT * FROM emp_job_title;
@@ -58,7 +61,7 @@ DROP TABLE IF EXISTS emp_address;
 -- TABLE 4
 	-- employee editing available
 CREATE TABLE emp_address (
-	emp_id INT(10) NOT NULL,
+	emp_id INT(10) NOT NULL UNIQUE,
     street VARCHAR(50),
     house_num INT(5),
     pin_code INT(5),
@@ -78,13 +81,14 @@ DROP TABLE IF EXISTS emp_pay;
 -- TABLE 5
 	-- read only to employee
 CREATE TABLE emp_pay (
-	emp_id INT(10) NOT NULL UNIQUE,
+	emp_id INT(10),
     gross_yearly INT(10),
     gross_monthly INT(10),
     bonus INT(10),
     job_level VARCHAR(50),
     pay_scale_group CHAR(2),
     payment_method ENUM('Weekly','Monthly'),
+    PRIMARY KEY(emp_id),
     INDEX `idx_emp_id_pay` (emp_id),
     CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -96,10 +100,11 @@ DROP TABLE IF EXISTS emp_bank_details;
 -- TABLE 6
 	-- employee editing available
 CREATE TABLE emp_bank_details (
-	emp_id INT(10) NOT NULL UNIQUE,
+	emp_id INT(10),
 	iban VARCHAR(20),
     bic VARCHAR(20),
     bank_name VARCHAR(15),
+    PRIMARY KEY(emp_id),
     INDEX `idx_emp_id_bank_det` (emp_id),
     CONSTRAINT `fk_emp_bank_det_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -111,12 +116,13 @@ DROP TABLE IF EXISTS emp_benefits;
 -- TABLE 7
 	-- employee editing available
 CREATE TABLE emp_benefits (
-	emp_id INT(10) NOT NULL,
+	emp_id INT(10),
 	social_sec_num VARCHAR(30) NOT NULL UNIQUE,
     tax_id VARCHAR(30) NOT NULL UNIQUE,
     health_ins_type ENUM('Public','Private'),
     health_ins_id VARCHAR(30) NOT NULL UNIQUE,
     health_ins_provider VARCHAR(40),
+    PRIMARY KEY(emp_id),
 	INDEX `idx_emp_id_benefits` (emp_id),
     CONSTRAINT `fk_emp_benefits_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -129,7 +135,7 @@ DROP TABLE IF EXISTS emp_tax;
 	-- calculation table
 	-- read only to employee
 CREATE TABLE emp_tax (
-	emp_id INT(10) NOT NULL,
+	emp_id INT(10),
     emp_tax_class TINYINT(4) NOT NULL,
     solidarity_surcharge INT(10) NOT NULL DEFAULT 0,
     church_tax INT(10) NOT NULL DEFAULT 0,
@@ -140,6 +146,7 @@ CREATE TABLE emp_tax (
     health_insurance INT(10) NOT NULL DEFAULT 0,
     care_insurance INT(10) NOT NULL DEFAULT 0,
     social_charges INT(10) NOT NULL DEFAULT 0,
+    PRIMARY KEY(emp_id),
 	INDEX `idx_emp_id_tax` (emp_id),
     CONSTRAINT `fk_emp_tax_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT    
 );
@@ -159,7 +166,7 @@ CREATE TABLE emp_payment_hist (
 	INDEX `idx_emp_id_pay_hist` (emp_id),
     CONSTRAINT `fk_emp_pay_hist_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_payment_hist VALUES(10000, 30000, 0.0, 500, 2019), (1, 36000, 20.0, 1000, 2020);
+INSERT INTO emp_payment_hist VALUES(10000, 30000, 0.0, 500, 2019), (10000, 36000, 20.0, 1000, 2020);
 SELECT * FROM emp_payment_hist;
 
 
@@ -311,7 +318,7 @@ CREATE TABLE emp_payscale_ref (
     min_salary_range INT(10),
     max_salary_range INT(10)
 );
-INSERT INTO emp_payscale_references VALUES('A','executive management','CEO','A1',100001,150000),
+INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001,150000),
 										  ('A','executive management','senior_executive','A2',100001,150000),
                                           ('A','executive management','executive','A3',100001,150000),
                                           ('B','middle management','senior director','B1',70001,100000),
@@ -323,7 +330,7 @@ INSERT INTO emp_payscale_references VALUES('A','executive management','CEO','A1'
                                           ('D','staff','senior staff','D1',10000,40000),
                                           ('D','staff','intermediate','D2',10000,40000),
                                           ('D','staff','associate','D3',10000,40000);
-SELECT * FROM emp_payscale_references;
+SELECT * FROM emp_payscale_ref;
 
 
 DROP TABLE IF EXISTS project_contracts;
@@ -372,12 +379,12 @@ CREATE TABLE login (
     INDEX `idx_emp_login` (emp_id),
     CONSTRAINT `fk_emp_login_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO login VALUES(1, md5('one')), (2, md5('two'));
+INSERT INTO login VALUES(10000, md5('one'));
 SELECT * FROM login;
 
 
 
-INSERT INTO country_code VALUES ('af','afghanistan'),
+INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('al','albania'),
 ('dz','algeria'),
 ('as','american samoa'),

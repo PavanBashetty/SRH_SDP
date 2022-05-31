@@ -358,7 +358,7 @@ CREATE TABLE admin_contracts (
     contract_workers INT(5),
     contract_budget INT(10)
 );
-INSERT INTO admin_contracts VALUES('Food', 'a1', 'Maraeck', '2022-01-01', '2022-06-01', 15, 10500);
+INSERT INTO admin_contracts VALUES('Food', 'A1', 'Maraeck', '2022-01-01', '2022-06-01', 15, 10500);
 SELECT * FROM admin_contracts;
 
 

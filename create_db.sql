@@ -208,6 +208,7 @@ CREATE TABLE emp_education (
 );
 INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE'),
 							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS');
+							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE');
 SELECT * FROM emp_education;
 
 

@@ -22,6 +22,8 @@ CREATE TABLE employees (
 ALTER TABLE employees AUTO_INCREMENT=10000;
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('bashetty', 'r', 'pavan', 'Male', '2019-04-15', '1992-06-05', 'Indian', 'Single', 0, 'prb@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Bandaru', '', 'Sumathi', 'FeMale', '2018-03-26', '1997-09-04', 'Indian', 'Married', 0, 'Sumathirongali@gmail.com');
 SELECT * FROM employees;
 
 

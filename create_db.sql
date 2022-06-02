@@ -207,7 +207,7 @@ CREATE TABLE emp_education (
     CONSTRAINT `fk_emp_edu_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE'),
-							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS');
+							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS'),
 							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE');
 SELECT * FROM emp_education;
 
@@ -370,7 +370,7 @@ CREATE TABLE admin_contracts (
 );
 INSERT INTO admin_contracts VALUES('Food', 'A1', 'Maraeck', '2022-01-01', '2022-06-01', 15, 10500);
 SELECT * FROM admin_contracts;
-
+UPDATE admin_contracts SET contract_id = 'F1' WHERE contract_type = 'Food';
 
 DROP TABLE IF EXISTS login;
 -- TABLE 21

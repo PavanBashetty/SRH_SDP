@@ -370,7 +370,7 @@ CREATE TABLE admin_contracts (
 );
 INSERT INTO admin_contracts VALUES('Food', 'A1', 'Maraeck', '2022-01-01', '2022-06-01', 15, 10500);
 SELECT * FROM admin_contracts;
-UPDATE admin_contracts SET contract_id = 'F1' WHERE contract_type = 'Food';
+
 
 DROP TABLE IF EXISTS login;
 -- TABLE 21

@@ -22,6 +22,8 @@ CREATE TABLE employees (
 ALTER TABLE employees AUTO_INCREMENT=10000;
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('bashetty', 'r', 'pavan', 'Male', '2019-04-15', '1992-06-05', 'Indian', 'Single', 0, 'prb@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Bandaru', '', 'Sumathi', 'FeMale', '2018-03-26', '1997-09-04', 'Indian', 'Married', 0, 'Sumathirongali@gmail.com');
 SELECT * FROM employees;
 
 
@@ -206,6 +208,7 @@ CREATE TABLE emp_education (
 );
 INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE'),
 							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS');
+							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE');
 SELECT * FROM emp_education;
 
 

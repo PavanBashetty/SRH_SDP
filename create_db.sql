@@ -357,7 +357,7 @@ DROP TABLE IF EXISTS admin_contracts;
 	-- contracts table 2
 	-- not visible to internal employees
 CREATE TABLE admin_contracts (
-	contract_type VARCHAR(15),
+	contract_type VARCHAR(10),
     contract_id VARCHAR(5),
     contract_manager VARCHAR(40),
     start_date DATE,

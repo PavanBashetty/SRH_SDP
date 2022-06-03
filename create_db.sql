@@ -77,6 +77,7 @@ CREATE TABLE emp_address (
 );
 INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
 SELECT * FROM emp_address;
+ALTER TABLE emp_address CHANGE COLUMN house_num house_num VARCHAR(10) NULL DEFAULT NULL ;
 
 
 DROP TABLE IF EXISTS emp_pay;

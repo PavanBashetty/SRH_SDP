@@ -35,6 +35,7 @@ CREATE TABLE emp_project (
 	reporting_to INT(10),
 	project_id VARCHAR(10),
 	project_name VARCHAR(30),
+    PRIMARY KEY(emp_id,project_id), -- composite primary key
     INDEX `idx_emp_project` (emp_id),
     CONSTRAINT `fk_emp_project_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -65,7 +66,7 @@ DROP TABLE IF EXISTS emp_address;
 CREATE TABLE emp_address (
 	emp_id INT(10) NOT NULL UNIQUE,
     street VARCHAR(50),
-    house_num INT(5),
+    house_num VARCHAR(10),
     pin_code INT(5),
     city VARCHAR(30),
     state VARCHAR(40),
@@ -77,7 +78,7 @@ CREATE TABLE emp_address (
 );
 INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
 SELECT * FROM emp_address;
-ALTER TABLE emp_address CHANGE COLUMN house_num house_num VARCHAR(10) NULL DEFAULT NULL ;
+
 
 
 DROP TABLE IF EXISTS emp_pay;
@@ -166,6 +167,7 @@ CREATE TABLE emp_payment_hist (
     hike DECIMAL(6,2),
     bonus INT(10),
     finanical_year YEAR,
+    PRIMARY KEY (emp_id, gross_yearly), -- composite primary key
 	INDEX `idx_emp_id_pay_hist` (emp_id),
     CONSTRAINT `fk_emp_pay_hist_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -186,6 +188,7 @@ CREATE TABLE emp_exp_hist (
     domain VARCHAR(30),
     job VARCHAR(30),
     job_title VARCHAR(30),
+    PRIMARY KEY(emp_id, start_date), -- composite primary key
 	INDEX `idx_emp_id_exp_hist` (emp_id),
     CONSTRAINT `fk_emp_exp_hist_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -198,12 +201,13 @@ DROP TABLE IF EXISTS emp_education;
 	-- employee editing available
 CREATE TABLE emp_education (
 	emp_id INT(10) NOT NULL,
-    education_type ENUM('Diploma','Bachelors','Masters','Doctorate','PhD'),
+    education_type ENUM('Diploma','Bachelors','Masters','Doctorate'),
     start_date DATE,
     end_date DATE,
     country VARCHAR(30),
     institute_name VARCHAR(60),
     major VARCHAR(20),
+    PRIMARY KEY(emp_id, education_type), -- composite primary key
 	INDEX `idx_emp_id_edu` (emp_id),
     CONSTRAINT `fk_emp_edu_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -223,6 +227,7 @@ CREATE TABLE emp_vacation (
     leave_type ENUM('Sick','Casual','Annual','Maternity','Holidays'),
     vacation_status ENUM('Pending','Approved','Rejected'),
     leave_note VARCHAR(100),
+    PRIMARY KEY(emp_id, start_date), -- composite primary key
  	INDEX `idx_emp_id_vacay` (emp_id),
     CONSTRAINT `fk_emp_vacay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT   
 );
@@ -262,6 +267,7 @@ CREATE TABLE emp_family (
     relation ENUM('Mother','Father','Children','Spouse'),
     date_of_birth DATE,
     nationality VARCHAR(30),
+    PRIMARY KEY(emp_id, last_name, first_name), -- composite primary key
  	INDEX `idx_emp_id_emp_family` (emp_id),
     CONSTRAINT `fk_emp_emp_family_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT 
 );
@@ -278,10 +284,14 @@ CREATE TABLE equipments (
     equip_id_num INT(15),
     equip_name VARCHAR(40),
     equip_borrowed_date DATE,
+    PRIMARY KEY(emp_id, equip_name, equip_borrowed_date), -- composite primary key
  	INDEX `idx_emp_id_equipments` (emp_id),
     CONSTRAINT `fk_emp_equipments_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT 
 );    
 INSERT INTO equipments VALUES(10000,'Hardware', 123456, 'monitor', '2020-05-04');
+INSERT INTO equipments VALUES(10000,'Software', 123457, 'DBMS', '2020-05-25');
+INSERT INTO equipments VALUES(10000,'Hardware', 123456, 'monitor', '2020-06-04');
+-- INSERT INTO equipments VALUES(10000,'Hardware', 123456, 'monitor', '2020-05-04'); -- Will throw error
 SELECT * FROM equipments;
 
 
@@ -350,7 +360,8 @@ CREATE TABLE project_contracts (
     start_date DATE,
     end_date date,
     stakeholder_id VARCHAR(10),
-    stakeholder_name VARCHAR(40)
+    stakeholder_name VARCHAR(40),
+    PRIMARY KEY(project_id, reporting_to, start_Date) -- composite primary key
 );
 INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 'Paul', 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
 SELECT * FROM project_contracts;
@@ -367,7 +378,8 @@ CREATE TABLE admin_contracts (
     start_date DATE,
     end_date DATE,
     contract_workers INT(5),
-    contract_budget INT(10)
+    contract_budget INT(10),
+    PRIMARY KEY(contract_type, contract_id, start_date) -- composite primary key
 );
 INSERT INTO admin_contracts VALUES('Food', 'A1', 'Maraeck', '2022-01-01', '2022-06-01', 15, 10500);
 SELECT * FROM admin_contracts;

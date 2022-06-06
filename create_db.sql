@@ -87,6 +87,7 @@ DROP TABLE IF EXISTS emp_pay;
 	-- read only to employee
 CREATE TABLE emp_pay (
 	emp_id INT(10),
+    emp_tax_class TINYINT(4) NOT NULL,
     gross_yearly INT(10),
     gross_monthly INT(10),
     bonus INT(10),
@@ -97,7 +98,7 @@ CREATE TABLE emp_pay (
     INDEX `idx_emp_id_pay` (emp_id),
     CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_pay VALUES(10000, 36000, 3000, 2000, 'd1', 'd','Monthly');
+INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
 SELECT * FROM emp_pay;
 
 
@@ -141,21 +142,21 @@ DROP TABLE IF EXISTS emp_tax;
 	-- read only to employee
 CREATE TABLE emp_tax (
 	emp_id INT(10),
-    emp_tax_class TINYINT(4) NOT NULL,
-    solidarity_surcharge INT(10) NOT NULL DEFAULT 0,
-    church_tax INT(10) NOT NULL DEFAULT 0,
-    salary_tax INT(10) NOT NULL DEFAULT 0,
-    total_tax INT(10) NOT NULL DEFAULT 0,
-    pension_insurance INT(10) NOT NULL DEFAULT 0,
-    unemployment_insurance INT(10) NOT NULL DEFAULT 0,
-    health_insurance INT(10) NOT NULL DEFAULT 0,
-    care_insurance INT(10) NOT NULL DEFAULT 0,
-    social_charges INT(10) NOT NULL DEFAULT 0,
+    solidarity_surcharge DEC(10,2) NOT NULL DEFAULT 0,
+    church_tax DEC(10,2) NOT NULL DEFAULT 0,
+    income_tax DEC(10,2) NOT NULL DEFAULT 0,
+    total_tax DEC(10,2) NOT NULL DEFAULT 0,
+    pension_insurance DEC(10,2) NOT NULL DEFAULT 0,
+    unemployment_insurance DEC(10,2) NOT NULL DEFAULT 0,
+    health_insurance DEC(10,2) NOT NULL DEFAULT 0,
+    care_insurance DEC(10,2) NOT NULL DEFAULT 0,
+    social_charges DEC(10,2) NOT NULL DEFAULT 0,
+    net_monthly DEC(10,2) NOT NULL DEFAULT 0,
     PRIMARY KEY(emp_id),
 	INDEX `idx_emp_id_tax` (emp_id),
     CONSTRAINT `fk_emp_tax_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT    
 );
-INSERT INTO emp_tax VALUES(10000, 3, 200, 100, 500, 800, 200, 200, 300, 80, 780);
+-- INSERT INTO emp_tax VALUES(10000, 200, 100, 500, 800, 200, 200, 300, 80, 780);
 SELECT * FROM emp_tax;
 
 

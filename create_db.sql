@@ -67,7 +67,7 @@ CREATE TABLE emp_address (
 	emp_id INT(10) NOT NULL UNIQUE,
     street VARCHAR(50),
     house_num VARCHAR(10),
-    pin_code INT(5),
+    pin_code DECIMAL(5,0) zerofill, -- restricted to 5 digits
     city VARCHAR(30),
     state VARCHAR(40),
     country VARCHAR(20),
@@ -77,6 +77,7 @@ CREATE TABLE emp_address (
     CONSTRAINT `fk_emp_address_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
+INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
 SELECT * FROM emp_address;
 
 

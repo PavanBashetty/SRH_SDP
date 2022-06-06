@@ -24,6 +24,10 @@ INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date,
 VALUES ('bashetty', 'r', 'pavan', 'Male', '2019-04-15', '1992-06-05', 'Indian', 'Single', 0, 'prb@gmail.com');
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('Bandaru', '', 'Sumathi', 'FeMale', '2018-03-26', '1997-09-04', 'Indian', 'Married', 0, 'Sumathirongali@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Cooper', 'L', 'Sheldon', 'Male', '2020-01-20', '1987-05-01', 'USA', 'Married', 0, 'sheldonC@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Hofstder', '', 'Leonard', 'Male', '2021-11-2', '1990-02-21', 'USA', 'Married', 0, 'LeonardH@gmail.com');
 SELECT * FROM employees;
 
 
@@ -88,9 +92,9 @@ DROP TABLE IF EXISTS emp_pay;
 CREATE TABLE emp_pay (
 	emp_id INT(10),
     emp_tax_class TINYINT(4) NOT NULL,
-    gross_yearly INT(10),
-    gross_monthly INT(10),
-    bonus INT(10),
+    gross_yearly DEC(10,2),
+    gross_monthly DEC(10,2),
+    bonus DEC(10,2),
     job_level VARCHAR(50),
     pay_scale_group CHAR(2),
     payment_method ENUM('Weekly','Monthly'),
@@ -99,6 +103,10 @@ CREATE TABLE emp_pay (
     CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
+INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly');
+INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
+INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
+UPDATE emp_pay SET gross_yearly = 80000, gross_monthly = 6666.66 WHERE emp_id = 10002;
 SELECT * FROM emp_pay;
 
 

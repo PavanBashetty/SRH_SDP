@@ -1,18 +1,36 @@
 -- CREATE TRIGGER
 USE srh_01;
+SHOW TRIGGERS LIKE 'emp_pay';
+
+DROP TRIGGER IF EXISTS srh_01.empPayInsert;
 DELIMITER //
 CREATE TRIGGER srh_01.empPayInsert 
-AFTER INSERT ON srh_01.emp_pay FOR EACH ROW -- in servlet, if we write there, we can take IN values right from there
+AFTER INSERT ON emp_pay FOR EACH ROW -- in servlet, if we write there, we can take IN values right from there
 BEGIN
-call tax_deductions(emp_pay.emp_id, emp_pay.emp_tax_class, emp_pay.gross_monthly); 
+DECLARE Tri_empID INT(10);
+DECLARE Tri_empTaxClass INT(4);
+DECLARE Tri_grossMonthly DEC(10,2);
+
+SET Tri_empID = NEW.emp_id;
+SET Tri_empTaxClass = NEW.emp_tax_class;
+SET Tri_grossMonthly = NEW.gross_monthly;
+call tax_deductions(Tri_empID, Tri_empTaxClass, Tri_grossMonthly); 
 END //
 DELIMITER ;
 
+DROP TRIGGER IF EXISTS srh_01.empPayUpdate;
 DELIMITER //
 CREATE TRIGGER srh_01.empPayUpdate
 AFTER UPDATE ON srh_01.emp_pay FOR EACH ROW -- in servlet
 BEGIN
-call tax_deductions(emp_pay.emp_id, emp_pay.emp_tax_class, emp_pay.gross_monthly);
+DECLARE Tri_empID INT(10);
+DECLARE Tri_empTaxClass INT(4);
+DECLARE Tri_grossMonthly DEC(10,2);
+
+SET Tri_empID = NEW.emp_id;
+SET Tri_empTaxClass = NEW.emp_tax_class;
+SET Tri_grossMonthly = NEW.gross_monthly;
+call tax_deductions(Tri_empID, Tri_empTaxClass, Tri_grossMonthly); 
 END //
 DELIMITER ;
 
@@ -26,6 +44,7 @@ CREATE PROCEDURE tax_deductions(IN empID INT(10), IN empTaxClass INT(4), IN gros
 -- call tax_deductions(10000, 3, 3000);
 BEGIN
 
+
 DECLARE Pro_Solidarity_surcharge DEC(10,2);
 DECLARE Pro_chruch_tax DEC(10,2);
 DECLARE Pro_income_tax DEC(10,2);
@@ -36,6 +55,8 @@ DECLARE Pro_Care_insurance DEC(10,2);
 DECLARE Pro_total_tax DEC(10,2);
 DECLARE Pro_social_charges DEC(10,2);
 DECLARE Pro_netSal DEC(10,2);
+
+DELETE FROM emp_tax WHERE emp_id = empID;
 
 IF empTaxClass = 1 THEN
 
@@ -150,9 +171,3 @@ END IF;
 END //
 
 DELIMITER ;
-
-SELECT * FROM emp_pay;
-SELECT * FROM emp_tax;
-
--- INSERT INTO emp_pay VALUES(10001, 48000, 4000, 3000, 'c2', 'c', 'Monthly');
-call tax_deductions(10000, 3, 3000);

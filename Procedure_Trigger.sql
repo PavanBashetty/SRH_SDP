@@ -5,7 +5,7 @@ SHOW TRIGGERS LIKE 'emp_pay';
 DROP TRIGGER IF EXISTS srh_01.empPayInsert;
 DELIMITER //
 CREATE TRIGGER srh_01.empPayInsert 
-AFTER INSERT ON emp_pay FOR EACH ROW -- in servlet, if we write there, we can take IN values right from there
+AFTER INSERT ON emp_pay FOR EACH ROW
 BEGIN
 DECLARE Tri_empID INT(10);
 DECLARE Tri_empTaxClass INT(4);
@@ -21,7 +21,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS srh_01.empPayUpdate;
 DELIMITER //
 CREATE TRIGGER srh_01.empPayUpdate
-AFTER UPDATE ON srh_01.emp_pay FOR EACH ROW -- in servlet
+AFTER UPDATE ON srh_01.emp_pay FOR EACH ROW
 BEGIN
 DECLARE Tri_empID INT(10);
 DECLARE Tri_empTaxClass INT(4);
@@ -41,7 +41,6 @@ DROP PROCEDURE IF EXISTS tax_deductions;
 DELIMITER //
 
 CREATE PROCEDURE tax_deductions(IN empID INT(10), IN empTaxClass INT(4), IN gross_monthly INT(10))
--- call tax_deductions(10000, 3, 3000);
 BEGIN
 
 
@@ -167,7 +166,6 @@ INSERT INTO emp_tax VALUES(empID, Pro_Solidarity_surcharge, Pro_chruch_tax, Pro_
 
 
 END IF;
-
 END //
 
 DELIMITER ;

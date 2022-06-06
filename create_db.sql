@@ -55,7 +55,7 @@ CREATE TABLE emp_job_title (
 	employment_sub_status ENUM('Full time','Part time', 'Internship', 'Working student'),
 	employment_title VARCHAR(50),
 	curr_job_title VARCHAR(50),
-	working_status ENUM('Active','On leave','Seperated','On notice', 'Prohibition','Retired'),
+	working_status ENUM('Active','On leave','Seperated','On notice', 'Prohibition','Retired') DEFAULT NULL,
 	PRIMARY KEY(emp_id),
     INDEX `idx_emp_job_title` (emp_id),
     CONSTRAINT `fk_emp_job_title_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
@@ -126,10 +126,10 @@ INSERT INTO emp_bank_details VALUES(10000,'IBAN11111111', 'BIC13y4343', 'Sparkas
 SELECT * FROM emp_bank_details;
 
 
-DROP TABLE IF EXISTS emp_benefits;
+DROP TABLE IF EXISTS emp_insurance;
 -- TABLE 7
 	-- employee editing available
-CREATE TABLE emp_benefits (
+CREATE TABLE emp_insurance (
 	emp_id INT(10),
 	social_sec_num VARCHAR(30) NOT NULL UNIQUE,
     tax_id VARCHAR(30) NOT NULL UNIQUE,
@@ -140,8 +140,8 @@ CREATE TABLE emp_benefits (
 	INDEX `idx_emp_id_benefits` (emp_id),
     CONSTRAINT `fk_emp_benefits_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_benefits VALUES(10000, 'SSN123456', 'TX1234567890', 'Public', 'HI123457', 'TK');
-SELECT * FROM emp_benefits;
+INSERT INTO emp_insurance VALUES(10000, 'SSN123456', 'TX1234567890', 'Public', 'HI123457', 'TK');
+SELECT * FROM emp_insurance;
 
 
 DROP TABLE IF EXISTS emp_tax;
@@ -211,19 +211,20 @@ DROP TABLE IF EXISTS emp_education;
 	-- employee editing available
 CREATE TABLE emp_education (
 	emp_id INT(10) NOT NULL,
-    education_type ENUM('Diploma','Bachelors','Masters','Doctorate'),
+    education_type ENUM('Diploma','Bachelors','Masters','PhD') ,
     start_date DATE,
     end_date DATE,
     country VARCHAR(30),
     institute_name VARCHAR(60),
     major VARCHAR(20),
+    grade VARCHAR(10) DEFAULT NULL,
     PRIMARY KEY(emp_id, education_type), -- composite primary key
 	INDEX `idx_emp_id_edu` (emp_id),
     CONSTRAINT `fk_emp_edu_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE'),
-							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS'),
-							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE');
+INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE', 3),
+							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS',2),
+							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE', 'A');
 SELECT * FROM emp_education;
 
 

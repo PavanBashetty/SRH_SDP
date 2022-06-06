@@ -217,14 +217,14 @@ CREATE TABLE emp_education (
     country VARCHAR(30),
     institute_name VARCHAR(60),
     major VARCHAR(20),
-    grade VARCHAR(10) DEFAULT NULL,
+    grade DEC(4,2),
     PRIMARY KEY(emp_id, education_type), -- composite primary key
 	INDEX `idx_emp_id_edu` (emp_id),
     CONSTRAINT `fk_emp_edu_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_education VALUES(10000, 'Bachelors','2010-08-10','2014-05-30','india','PESIT','ECE', 3),
 							    (10000, 'Masters','2022-04-01','2024-04-30','germany','SRH','ACS',2),
-							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE', 'A');
+							    (10001,'Bachelors','2010-08-10','2014-05-30','india','RIT','ECE', 1.5);
 SELECT * FROM emp_education;
 
 

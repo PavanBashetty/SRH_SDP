@@ -366,7 +366,7 @@ CREATE TABLE project_contracts (
 	project_id VARCHAR(10),
 	project_name VARCHAR(30),
     reporting_to INT(10),
-    project_manager VARCHAR(40),
+    -- project_manager VARCHAR(40),
     project_budget INT(10),
     start_date DATE,
     end_date date,
@@ -374,7 +374,7 @@ CREATE TABLE project_contracts (
     stakeholder_name VARCHAR(40),
     PRIMARY KEY(project_id, reporting_to, start_Date) -- composite primary key
 );
-INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 'Paul', 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
+INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
 SELECT * FROM project_contracts;
 
 

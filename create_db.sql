@@ -366,7 +366,6 @@ CREATE TABLE project_contracts (
 	project_id VARCHAR(10),
 	project_name VARCHAR(30),
     reporting_to INT(10),
-    -- project_manager VARCHAR(40),
     project_budget INT(10),
     start_date DATE,
     end_date date,

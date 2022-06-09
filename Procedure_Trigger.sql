@@ -1,4 +1,4 @@
--- CREATE TRIGGER
+-- CREATE TRIGGER FOR EMPLOYEE PAYMENT
 USE srh_01;
 SHOW TRIGGERS LIKE 'emp_pay';
 
@@ -33,6 +33,7 @@ SET Tri_grossMonthly = NEW.gross_monthly;
 call tax_deductions(Tri_empID, Tri_empTaxClass, Tri_grossMonthly); 
 END //
 DELIMITER ;
+
 
 
 -- Stored Procedure to calculate tax deductions

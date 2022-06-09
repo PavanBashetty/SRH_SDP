@@ -263,14 +263,14 @@ CREATE TABLE emp_leave_balance (
     casual_leaves TINYINT(4) DEFAULT 12,
     sick_leaves TINYINT(4) DEFAULT 11,
     Annual_leaves TINYINT(4) DEFAULT 24,
-    parental_leaves TINYINT(4) DEFAULT 0, -- changed materenity and paternity to one column called "parental"
+    parental_leaves INT(10) DEFAULT 365, -- changed materenity and paternity to one column called "parental"
     volunteering_leaves TINYINT(4) DEFAULT 4,
     financial_year YEAR,
     PRIMARY KEY(emp_id),
  	INDEX `idx_emp_id_leave_bal` (emp_id),
     CONSTRAINT `fk_emp_leave_bal_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT 
 );
-INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10001,2022), (10002,2022), (10003,2022), (10004,2022);
+INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10000,2022), (10001,2022), (10002,2022), (10003,2022), (10004,2022);
 SELECT * FROM emp_leave_balance;
 
 

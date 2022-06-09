@@ -28,6 +28,9 @@ INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date,
 VALUES ('Cooper', 'L', 'Sheldon', 'Male', '2020-01-20', '1987-05-01', 'USA', 'Married', 0, 'sheldonC@gmail.com');
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('Hofstder', '', 'Leonard', 'Male', '2021-11-2', '1990-02-21', 'USA', 'Married', 0, 'LeonardH@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Fowler', 'F', 'Amy', 'Female', '2022-01-22', '1989-12-11', 'USA', 'Married', 0, 'Amyff@gmail.com');
+
 SELECT * FROM employees;
 
 
@@ -100,7 +103,9 @@ CREATE TABLE emp_pay (
     payment_method ENUM('Weekly','Monthly'),
     PRIMARY KEY(emp_id),
     INDEX `idx_emp_id_pay` (emp_id),
-    CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
+    INDEX `idx_emp_tax_class_pay`(emp_tax_class),
+    CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT `fk_emp_tax_class_ref` FOREIGN KEY(emp_tax_class) REFERENCES emp_tax_class_ref(emp_tax_class) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
 INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly');
@@ -182,6 +187,7 @@ CREATE TABLE emp_payment_hist (
     CONSTRAINT `fk_emp_pay_hist_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_payment_hist VALUES(10000, 30000, 0.0, 500, 2019), (10000, 36000, 20.0, 1000, 2020);
+INSERT INTO emp_payment_hist VALUES(10001, 80000, 0.0, 5000, 2019), (10001, 100000, 25.0, 10000, 2020);
 SELECT * FROM emp_payment_hist;
 
 
@@ -235,7 +241,7 @@ CREATE TABLE emp_vacation (
 	emp_id INT(10) NOT NULL,
     start_date DATE,
     end_date DATE,
-    leave_type ENUM('Sick','Casual','Annual','Maternity','Holidays'),
+    leave_type ENUM('Casual','Sick','Annual','parental','Volunteering'),
     vacation_status ENUM('Pending','Approved','Rejected'),
     leave_note VARCHAR(100),
     PRIMARY KEY(emp_id, start_date), -- composite primary key
@@ -253,17 +259,18 @@ DROP TABLE IF EXISTS emp_leave_balance;
 		-- Few columns will be kept with constant values.
 	-- read only to employee
 CREATE TABLE emp_leave_balance (
-	emp_id INT(10) NOT NULL UNIQUE,
-    casual_leaves TINYINT(4) DEFAULT 24,
+	emp_id INT(10),
+    casual_leaves TINYINT(4) DEFAULT 12,
     sick_leaves TINYINT(4) DEFAULT 11,
-    maternity_leaves TINYINT(4) DEFAULT 0,
-    paternity_leaves TINYINT(4) DEFAULT 0,
+    Annual_leaves TINYINT(4) DEFAULT 24,
+    parental_leaves TINYINT(4) DEFAULT 0, -- changed materenity and paternity to one column called "parental"
     volunteering_leaves TINYINT(4) DEFAULT 4,
     financial_year YEAR,
+    PRIMARY KEY(emp_id),
  	INDEX `idx_emp_id_leave_bal` (emp_id),
     CONSTRAINT `fk_emp_leave_bal_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT 
 );
-INSERT INTO emp_leave_balance VALUES(10000,15,7,0,0,4,2020);
+INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10001,2022), (10002,2022), (10003,2022), (10004,2022);
 SELECT * FROM emp_leave_balance;
 
 
@@ -321,7 +328,8 @@ DROP TABLE IF EXISTS emp_tax_class_ref;
 	-- Its data dump
 CREATE TABLE emp_tax_class_ref (
 	emp_tax_class TINYINT(4) NOT NULL,
-    tax_description VARCHAR(300)
+    tax_description VARCHAR(300),
+    PRIMARY KEY(emp_tax_class)
 );
 INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, divorced, spouse living abroad or legally separated'),
 								    (2, 'Single parents'),
@@ -344,17 +352,17 @@ CREATE TABLE emp_payscale_ref (
     max_salary_range INT(10)
 );
 INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001,150000),
-										  ('A','executive management','senior_executive','A2',100001,150000),
-                                          ('A','executive management','executive','A3',100001,150000),
-                                          ('B','middle management','senior director','B1',70001,100000),
-                                          ('B','middle management','director','B2',70001,100000),
-                                          ('C','manager advisors','senior manager','C1',40001,70000),
-                                          ('C','manager advisors','senior advisor','C2',40001,70000),
-                                          ('C','manager advisors','manager','C3',40001,70000),
-                                          ('C','manager advisors','advisor','C4',40001,70000),
-                                          ('D','staff','senior staff','D1',10000,40000),
-                                          ('D','staff','intermediate','D2',10000,40000),
-                                          ('D','staff','associate','D3',10000,40000);
+								   ('A','executive management','senior_executive','A2',100001,150000),
+								   ('A','executive management','executive','A3',100001,150000),
+                                   ('B','middle management','senior director','B1',70001,100000),
+                                   ('B','middle management','director','B2',70001,100000),
+                                   ('C','manager advisors','senior manager','C1',40001,70000),
+                                   ('C','manager advisors','senior advisor','C2',40001,70000),
+                                   ('C','manager advisors','manager','C3',40001,70000),
+                                   ('C','manager advisors','advisor','C4',40001,70000),
+                                   ('D','staff','senior staff','D1',10000,40000),
+                                   ('D','staff','intermediate','D2',10000,40000),
+                                   ('D','staff','associate','D3',10000,40000);
 SELECT * FROM emp_payscale_ref;
 
 

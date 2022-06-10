@@ -33,6 +33,17 @@ VALUES ('Fowler', 'F', 'Amy', 'Female', '2022-01-22', '1989-12-11', 'USA', 'Marr
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('Hof', '', 'Penny', 'Female', '2019-04-14', '1986-10-1', 'USA', 'Married', 0, 'Penny@gmail.com');
 
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Mosby', '', 'Ted', 'Male', '2019-05-04', '1980-11-21', 'USA', 'Married', 0, 'TedM@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Erikson', '', 'Marshal', 'Male', '2019-05-04', '1979-1-11', 'USA', 'Married', 0, 'MarshalE@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Aldrin', '', 'Lily', 'Female', '2019-06-01', '1982-2-23', 'USA', 'Married', 0, 'LilyA@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Stinson', '', 'Barney', 'Male', '2021-02-14', '1978-3-06', 'USA', 'Single', 0, 'BarneyS@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Scherbatsky', '', 'Robin', 'Female', '2021-05-28', '1984-7-09', 'USA', 'Married', 0, 'RobinS@gmail.com');
+
 SELECT * FROM employees;
 
 
@@ -273,8 +284,9 @@ CREATE TABLE emp_leave_balance (
     CONSTRAINT `fk_emp_leave_bal_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT 
 );
 INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10000,2022), (10001,2022), (10002,2022), (10003,2022), (10004,2022);
+INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10005,2022), (10006,2022), (10007,2022), (10008,2022), (10009,2022), (10010,2022);
 SELECT * FROM emp_leave_balance;
-
+SELECT * FROM employees;
 
 DROP TABLE IF EXISTS emp_family;
 -- TABLE 14
@@ -367,7 +379,7 @@ INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001
                                    ('D','staff','associate','D3',10000,40000),
                                    ('H','middle management','HR','H1',70001,100000);
 SELECT * FROM emp_payscale_ref;
-SELECT * FROM emp_job_title;
+-- SELECT * FROM emp_job_title;
 
 DROP TABLE IF EXISTS project_contracts;
 -- TABLE 19

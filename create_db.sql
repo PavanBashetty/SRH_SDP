@@ -30,6 +30,8 @@ INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date,
 VALUES ('Hofstder', '', 'Leonard', 'Male', '2021-11-2', '1990-02-21', 'USA', 'Married', 0, 'LeonardH@gmail.com');
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('Fowler', 'F', 'Amy', 'Female', '2022-01-22', '1989-12-11', 'USA', 'Married', 0, 'Amyff@gmail.com');
+INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
+VALUES ('Hof', '', 'Penny', 'Female', '2019-04-14', '1986-10-1', 'USA', 'Married', 0, 'Penny@gmail.com');
 
 SELECT * FROM employees;
 
@@ -362,9 +364,10 @@ INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001
                                    ('C','manager advisors','advisor','C4',40001,70000),
                                    ('D','staff','senior staff','D1',10000,40000),
                                    ('D','staff','intermediate','D2',10000,40000),
-                                   ('D','staff','associate','D3',10000,40000);
+                                   ('D','staff','associate','D3',10000,40000),
+                                   ('H','middle management','HR','H1',70001,100000);
 SELECT * FROM emp_payscale_ref;
-
+SELECT * FROM emp_job_title;
 
 DROP TABLE IF EXISTS project_contracts;
 -- TABLE 19

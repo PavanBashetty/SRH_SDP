@@ -380,7 +380,7 @@ INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001
                                    ('D','staff','senior staff','D1',10000,40000),
                                    ('D','staff','intermediate','D2',10000,40000),
                                    ('D','staff','associate','D3',10000,40000),
-                                   ('H','middle management','HR','H1',70001,100000);
+                                   ('B','middle management','HR','B3',70001,100000);
 SELECT * FROM emp_payscale_ref;
 -- SELECT * FROM emp_job_title;
 

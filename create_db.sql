@@ -101,6 +101,23 @@ INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'Ge
 SELECT * FROM emp_address;
 
 
+DROP TABLE IF EXISTS emp_tax_class_ref;
+-- TABLE 17
+	-- Its data dump
+CREATE TABLE emp_tax_class_ref (
+	emp_tax_class TINYINT(4) NOT NULL,
+    tax_description VARCHAR(300),
+    PRIMARY KEY(emp_tax_class)
+);
+INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, divorced, spouse living abroad or legally separated'),
+								    (2, 'Single parents'),
+									(3, 'Recently widowed or married with a significantly larger income that the spouse'),
+                                    (4, 'Married, both spouses have a similar income'),
+                                    (5, 'Married with a significantly smaller income than the spouse'),
+                                    (6, 'Workers with multiple employments');
+SELECT * FROM emp_tax_class_ref;
+
+
 
 DROP TABLE IF EXISTS emp_pay;
 -- TABLE 5
@@ -126,7 +143,7 @@ INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
 INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
 UPDATE emp_pay SET gross_yearly = 80000, gross_monthly = 6666.66 WHERE emp_id = 10002;
 SELECT * FROM emp_pay;
-
+SELECT * FROM emp_tax_class_ref;
 
 DROP TABLE IF EXISTS emp_bank_details;
 -- TABLE 6
@@ -337,21 +354,7 @@ CREATE TABLE country_code_ref (
 -- INSERT table is at the end
 
 
-DROP TABLE IF EXISTS emp_tax_class_ref;
--- TABLE 17
-	-- Its data dump
-CREATE TABLE emp_tax_class_ref (
-	emp_tax_class TINYINT(4) NOT NULL,
-    tax_description VARCHAR(300),
-    PRIMARY KEY(emp_tax_class)
-);
-INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, divorced, spouse living abroad or legally separated'),
-								    (2, 'Single parents'),
-									(3, 'Recently widowed or married with a significantly larger income that the spouse'),
-                                    (4, 'Married, both spouses have a similar income'),
-                                    (5, 'Married with a significantly smaller income than the spouse'),
-                                    (6, 'Workers with multiple employments');
-SELECT * FROM emp_tax_class_ref;
+
 
 
 DROP TABLE IF EXISTS emp_payscale_ref;

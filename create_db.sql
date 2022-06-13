@@ -56,11 +56,20 @@ CREATE TABLE emp_project (
 	project_id VARCHAR(10),
 	project_name VARCHAR(30),
     PRIMARY KEY(emp_id,project_id), -- composite primary key
-    INDEX `idx_emp_project` (emp_id),
-    CONSTRAINT `fk_emp_project_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
+    INDEX `idx_emp_id_empProj` (emp_id),
+    INDEX `idx_project_id_empProj` (project_id),
+    CONSTRAINT `fk_emp_id_empProj` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT `fk_project_id_empProj` FOREIGN KEY (project_id) REFERENCES project_contracts(project_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_project VALUES(10000,10050, 'P10', 'Develop HR UI');
+INSERT INTO emp_project VALUES(10000,10050, 'P10', 'Develop HR UI'),
+							  (10001,10050, 'P10', 'Develop HR UI'),
+                              (10000,10040, 'P12', 'Design Database'),
+                              (10002,10040, 'P12', 'Design Database'),
+                              (10003,10030, 'P13', 'Application Layer'),
+                              (10004,10030, 'P13', 'Application Layer'),
+                              (10005,10030, 'P13', 'Application Layer');
 SELECT * FROM emp_project;
+
 
 DROP TABLE IF EXISTS emp_job_title;
 -- TABLE 3
@@ -94,13 +103,14 @@ CREATE TABLE emp_address (
     phone VARCHAR(15),
     personal_email_id VARCHAR(45),
     INDEX `idx_emp_id_address` (emp_id),
-    CONSTRAINT `fk_emp_address_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
+    INDEX `idx_country_address`(country),
+    CONSTRAINT `fk_emp_address_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT `fk_country_address_main` FOREIGN KEY (country) REFERENCES country_code_ref(country_name) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
-INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'Germany', '+49 1785790081', 'abc@gmail.com');
+INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'germany', '+49 1785790081', 'abc@gmail.com');
+INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'germany', '+49 1785790081', 'abc@gmail.com');
+
 SELECT * FROM emp_address;
-
-
 
 
 
@@ -336,10 +346,12 @@ DROP TABLE IF EXISTS country_code_ref;
 	-- Its data dump
 CREATE TABLE country_code_ref (
 	country_key VARCHAR(10) NOT NULL,
-    country_name VARCHAR(60) NOT NULL
+    country_name VARCHAR(60),
+    PRIMARY KEY(country_name)
 );
 -- INSERT table is at the end
 
+SELECT * FROM country_code_ref;
 
 DROP TABLE IF EXISTS emp_tax_class_ref;
 -- TABLE 17
@@ -403,7 +415,9 @@ CREATE TABLE project_contracts (
     stakeholder_name VARCHAR(40),
     PRIMARY KEY(project_id, reporting_to, start_Date) -- composite primary key
 );
-INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
+INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH'),
+									 ('p12','Design Database', 10040, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH'),
+                                     ('p13','Application Layer', 10030, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
 SELECT * FROM project_contracts;
 
 
@@ -489,7 +503,7 @@ INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('co','colombia'),
 ('km','comoros'),
 ('cg','congo'),
-('cd','congo'),
+('cd','congod'),
 ('ck','cook islands'),
 ('cr','costa rica'),
 ('ci','cote d'),
@@ -551,8 +565,8 @@ INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('kz','kazakhstan'),
 ('ke','kenya'),
 ('ki','kiribati'),
-('kp','korea'),
-('kr','korea'),
+('kp','north korea'),
+('kr','south korea'),
 ('kw','kuwait'),
 ('kg','kyrgyzstan'),
 ('la','lao people'),
@@ -673,7 +687,6 @@ INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('ve','venezuela'),
 ('vn','viet nam'),
 ('vg','virgin islands'),
-('vi','virgin islands'),
 ('wf','wallis and futuna'),
 ('eh','western sahara'),
 ('ye','yemen'),

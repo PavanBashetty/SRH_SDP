@@ -130,7 +130,7 @@ INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly'
 INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
 INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
 
-SELECT * FROM emp_pay;
+SELECT * FROM emp_TAX;
 
 DROP TABLE IF EXISTS emp_bank_details;
 -- TABLE 6

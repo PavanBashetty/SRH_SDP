@@ -101,21 +101,7 @@ INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'Ge
 SELECT * FROM emp_address;
 
 
-DROP TABLE IF EXISTS emp_tax_class_ref;
--- TABLE 17
-	-- Its data dump
-CREATE TABLE emp_tax_class_ref (
-	emp_tax_class TINYINT(4) NOT NULL,
-    tax_description VARCHAR(300),
-    PRIMARY KEY(emp_tax_class)
-);
-INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, divorced, spouse living abroad or legally separated'),
-								    (2, 'Single parents'),
-									(3, 'Recently widowed or married with a significantly larger income that the spouse'),
-                                    (4, 'Married, both spouses have a similar income'),
-                                    (5, 'Married with a significantly smaller income than the spouse'),
-                                    (6, 'Workers with multiple employments');
-SELECT * FROM emp_tax_class_ref;
+
 
 
 
@@ -134,16 +120,17 @@ CREATE TABLE emp_pay (
     PRIMARY KEY(emp_id),
     INDEX `idx_emp_id_pay` (emp_id),
     INDEX `idx_emp_tax_class_pay`(emp_tax_class),
+    INDEX `idx_job_level_pay`(job_level),
     CONSTRAINT `fk_emp_pay_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    CONSTRAINT `fk_emp_tax_class_ref` FOREIGN KEY(emp_tax_class) REFERENCES emp_tax_class_ref(emp_tax_class) ON UPDATE CASCADE ON DELETE RESTRICT
+    CONSTRAINT `fk_emp_tax_class_ref` FOREIGN KEY(emp_tax_class) REFERENCES emp_tax_class_ref(emp_tax_class) ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT `fk_job_level_ref` FOREIGN KEY(job_level) REFERENCES emp_payscale_ref(job_level) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
 INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly');
 INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
 INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
-UPDATE emp_pay SET gross_yearly = 80000, gross_monthly = 6666.66 WHERE emp_id = 10002;
+
 SELECT * FROM emp_pay;
-SELECT * FROM emp_tax_class_ref;
 
 DROP TABLE IF EXISTS emp_bank_details;
 -- TABLE 6
@@ -354,6 +341,21 @@ CREATE TABLE country_code_ref (
 -- INSERT table is at the end
 
 
+DROP TABLE IF EXISTS emp_tax_class_ref;
+-- TABLE 17
+	-- Its data dump
+CREATE TABLE emp_tax_class_ref (
+	emp_tax_class TINYINT(4) NOT NULL,
+    tax_description VARCHAR(300),
+    PRIMARY KEY(emp_tax_class)
+);
+INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, divorced, spouse living abroad or legally separated'),
+								    (2, 'Single parents'),
+									(3, 'Recently widowed or married with a significantly larger income that the spouse'),
+                                    (4, 'Married, both spouses have a similar income'),
+                                    (5, 'Married with a significantly smaller income than the spouse'),
+                                    (6, 'Workers with multiple employments');
+SELECT * FROM emp_tax_class_ref;
 
 
 
@@ -366,7 +368,8 @@ CREATE TABLE emp_payscale_ref (
     employment_title VARCHAR(50),
     job_level VARCHAR(50),
     min_salary_range INT(10),
-    max_salary_range INT(10)
+    max_salary_range INT(10),
+    PRIMARY KEY(job_level)
 );
 INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001,150000),
 								   ('A','executive management','senior_executive','A2',100001,150000),
@@ -382,7 +385,8 @@ INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001
                                    ('D','staff','associate','D3',10000,40000),
                                    ('B','middle management','HR','B3',70001,100000);
 SELECT * FROM emp_payscale_ref;
--- SELECT * FROM emp_job_title;
+
+
 
 DROP TABLE IF EXISTS project_contracts;
 -- TABLE 19
@@ -432,7 +436,7 @@ CREATE TABLE login (
     CONSTRAINT `fk_emp_login_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO login VALUES(10000, md5('one'));
-SELECT * FROM login;
+INSERT INTO login VALUES(10008, 'two');
 
 
 

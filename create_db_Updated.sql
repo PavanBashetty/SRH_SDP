@@ -46,7 +46,6 @@ VALUES ('Scherbatsky', '', 'Robin', 'Female', '2021-05-28', '1984-7-09', 'USA', 
 
 SELECT * FROM employees;
 
-
 DROP TABLE IF EXISTS project_contracts;
 -- TABLE 19
 	-- contracts table
@@ -109,7 +108,6 @@ CREATE TABLE emp_job_title (
 INSERT INTO emp_job_title VALUES(10000,'Internal', 'Full time', 'senior_staff', 'senior analyst', 'Active');
 SELECT * FROM emp_job_title;
 
-
 DROP TABLE IF EXISTS country_code_ref;
 -- TABLE 16
 	-- Its data dump
@@ -118,8 +116,7 @@ CREATE TABLE country_code_ref (
     country_name VARCHAR(60),
     PRIMARY KEY(country_name)
 );
-SELECT * FROM country_code_ref;
-
+-- INSERT table is at the end
 INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('al','albania'),
 ('dz','algeria'),
@@ -359,6 +356,7 @@ INSERT INTO country_code_ref VALUES ('af','afghanistan'),
 ('zm','zambia'),
 ('zw','zimbabwe');
 
+SELECT * FROM country_code_ref;
 
 DROP TABLE IF EXISTS emp_address;
 -- TABLE 4
@@ -401,6 +399,7 @@ INSERT INTO emp_tax_class_ref VALUES(1, 'Single, widowed, civil partnership, div
 SELECT * FROM emp_tax_class_ref;
 
 
+
 DROP TABLE IF EXISTS emp_payscale_ref;
 -- TABLE 18
 	-- Its data dump
@@ -428,7 +427,6 @@ INSERT INTO emp_payscale_ref VALUES('A','executive management','CEO','A1',100001
                                    ('B','middle management','HR','B3',70001,100000);
 SELECT * FROM emp_payscale_ref;
 
-
 DROP TABLE IF EXISTS emp_pay;
 -- TABLE 5
 	-- read only to employee
@@ -454,8 +452,7 @@ INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly'
 INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
 INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
 
-SELECT * FROM emp_TAX;
-
+SELECT * FROM emp_pay;
 
 DROP TABLE IF EXISTS emp_bank_details;
 -- TABLE 6
@@ -597,8 +594,8 @@ SELECT * FROM emp_vacation;
 
 DROP TABLE IF EXISTS emp_leave_balance;
 -- TABLE 13
-	-- This table needs to be updated eveytime a leave is approved .
-		--  columns will be kept with constant values.
+	-- This table needs to be updated eveytime a leave is approved and all but annual leave need to hit reset on Jan-01 every year.
+		-- Few columns will be kept with constant values.
 	-- read only to employee
 CREATE TABLE emp_leave_balance (
 	emp_id INT(10),
@@ -616,7 +613,6 @@ INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10000,2022), (10001
 INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10005,2022), (10006,2022), (10007,2022), (10008,2022), (10009,2022), (10010,2022);
 SELECT * FROM emp_leave_balance;
 SELECT * FROM employees;
-
 
 DROP TABLE IF EXISTS emp_family;
 -- TABLE 14
@@ -657,6 +653,9 @@ INSERT INTO equipments VALUES(10000,'Hardware', 123456, 'monitor', '2020-06-04')
 SELECT * FROM equipments;
 
 
+
+
+
 DROP TABLE IF EXISTS admin_contracts;
 -- TABLE 20
 	-- contracts table 2
@@ -687,9 +686,6 @@ CREATE TABLE login (
 );
 INSERT INTO login VALUES(10000, md5('one'));
 INSERT INTO login VALUES(10008, 'two');
-
-
-
 
 
     

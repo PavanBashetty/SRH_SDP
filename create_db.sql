@@ -80,7 +80,7 @@ CREATE TABLE emp_job_title (
 	employment_sub_status ENUM('Full time','Part time', 'Internship', 'Working student'),
 	employment_title VARCHAR(50),
 	curr_job_title VARCHAR(50),
-	working_status ENUM('Active','On leave','Seperated','On notice', 'Prohibition','Retired') DEFAULT NULL,
+	working_status ENUM('Active', 'On leave', 'Separated', 'On notice', 'Prohibition', 'Retired') DEFAULT NULL,
 	PRIMARY KEY(emp_id),
     INDEX `idx_emp_job_title` (emp_id),
     CONSTRAINT `fk_emp_job_title_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT

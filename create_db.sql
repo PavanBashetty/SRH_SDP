@@ -449,12 +449,11 @@ CREATE TABLE emp_pay (
     CONSTRAINT `fk_emp_tax_class_ref` FOREIGN KEY(emp_tax_class) REFERENCES emp_tax_class_ref(emp_tax_class) ON UPDATE CASCADE ON DELETE RESTRICT,
     CONSTRAINT `fk_job_level_ref` FOREIGN KEY(job_level) REFERENCES emp_payscale_ref(job_level) ON UPDATE CASCADE ON DELETE RESTRICT
 );
-INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
-INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly');
-INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
-INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
-
-SELECT * FROM emp_TAX;
+-- INSERT INTO emp_pay VALUES(10000, 3, 36000, 3000, 2000, 'd1', 'd','Monthly');
+-- INSERT INTO emp_pay VALUES(10001, 1, 100000, 8333.33, 5000, 'd1', 'd', 'Monthly');
+-- INSERT INTO emp_pay VALUES(10002, 1, 50000, 4000, 3000, 'd1', 'd', 'Monthly');
+-- INSERT INTO emp_pay VALUES(10003, 2, 96000, 8000, 4000, 'c1', 'c', 'Monthly');
+SELECT * FROM emp_pay;
 
 
 DROP TABLE IF EXISTS emp_bank_details;
@@ -511,7 +510,7 @@ CREATE TABLE emp_tax (
 	INDEX `idx_emp_id_tax` (emp_id),
     CONSTRAINT `fk_emp_tax_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT    
 );
--- INSERT INTO emp_tax VALUES(10000, 200, 100, 500, 800, 200, 200, 300, 80, 780);
+
 SELECT * FROM emp_tax;
 
 
@@ -615,7 +614,7 @@ CREATE TABLE emp_leave_balance (
 INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10000,2022), (10001,2022), (10002,2022), (10003,2022), (10004,2022);
 INSERT INTO emp_leave_balance(emp_id, financial_year) VALUES(10005,2022), (10006,2022), (10007,2022), (10008,2022), (10009,2022), (10010,2022);
 SELECT * FROM emp_leave_balance;
-SELECT * FROM employees;
+
 
 
 DROP TABLE IF EXISTS emp_family;
@@ -686,8 +685,9 @@ CREATE TABLE login (
     CONSTRAINT `fk_emp_login_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO login VALUES(10000, md5('one'));
-INSERT INTO login VALUES(10008, 'two');
+-- INSERT INTO login VALUES(10008, 'two');
 
+SELECT * FROM login;
 
 
 

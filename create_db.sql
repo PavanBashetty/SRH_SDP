@@ -44,7 +44,7 @@ VALUES ('Stinson', '', 'Barney', 'Male', '2021-02-14', '1978-3-06', 'USA', 'Sing
 INSERT INTO employees (last_name, middle_name, first_name, gender, joining_date, date_of_birth, nationality, martial_status, children, offical_email_id)
 VALUES ('Scherbatsky', '', 'Robin', 'Female', '2021-05-28', '1984-7-09', 'USA', 'Married', 0, 'RobinS@gmail.com');
 
-SELECT * FROM employees;
+SELECT * FROM employees WHERE emp_id = 10000;
 
 
 DROP TABLE IF EXISTS project_contracts;
@@ -65,6 +65,7 @@ CREATE TABLE project_contracts (
 INSERT INTO project_contracts VALUES ('p10','Develop HR UI', 10050, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH'),
 									 ('p12','Design Database', 10040, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH'),
                                      ('p13','Application Layer', 10030, 5000, '2022-05-15', '2022-06-15', 's01', 'SRH');
+INSERT INTO project_contracts VALUES('p14','Testing', 10020, 4000, '2022-06-16', '2022-07-15', 's01', 'SRH');
 SELECT * FROM project_contracts;
 
 
@@ -90,7 +91,7 @@ INSERT INTO emp_project VALUES(10000,10050, 'P10', 'Develop HR UI'),
                               (10004,10030, 'P13', 'Application Layer'),
                               (10005,10030, 'P13', 'Application Layer');
 SELECT * FROM emp_project;
-
+SELECT * FROM project_contracts;
 
 DROP TABLE IF EXISTS emp_job_title;
 -- TABLE 3
@@ -382,6 +383,7 @@ INSERT INTO emp_address VALUES(10000,'BS 13', 740, 69123, 'Heidelberg', 'BW', 'g
 INSERT INTO emp_address VALUES(10001,'BS 13', 740, 1923, 'Heidelberg', 'BW', 'germany', '+49 1785790081', 'abc@gmail.com');
 
 SELECT * FROM emp_address;
+SELECT * FROM project_contracts;
 
 
 DROP TABLE IF EXISTS emp_tax_class_ref;
@@ -685,7 +687,7 @@ CREATE TABLE login (
     CONSTRAINT `fk_emp_login_main` FOREIGN KEY (emp_id) REFERENCES employees(emp_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 INSERT INTO login VALUES(10000, md5('one'));
--- INSERT INTO login VALUES(10008, 'two');
+INSERT INTO login VALUES(10001, md5('two'));
 
 SELECT * FROM login;
 

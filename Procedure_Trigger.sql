@@ -275,3 +275,24 @@ END IF;
 END //
 DELIMITER ; 
 
+-- --------------------------------------------------------------------------------------------------
+-- --------------------------------------------------------------------------------------------------
+
+-- TRIGGER 3 FOR EMPLOYEE Job_Title TABLE - Working Status insert
+DROP TRIGGER IF EXISTS srh_01.empJobTitleInsert;
+DELIMITER //
+CREATE TRIGGER srh_01.empJobTitleInsert
+AFTER INSERT ON employees FOR EACH ROW
+BEGIN
+DECLARE New_empID INT(10);
+DECLARE New_WorkingStatus VARCHAR(50);
+
+
+
+SET New_empID = NEW.emp_id;
+SET New_WorkingStatus = 'Active';
+
+
+INSERT INTO srh_01.emp_job_title (emp_id, working_status) VALUES (New_empID, New_WorkingStatus);
+END //
+DELIMITER ;
